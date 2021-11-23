@@ -5,9 +5,7 @@ import com.example.codeclan.pirateservice.repository.ShipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +23,11 @@ public class ShipController {
     @GetMapping(value = "/ships/{id}")
     public ResponseEntity getShip(@PathVariable Long id) {
         return new ResponseEntity<>(shipRepository.findById(id), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/ships")
+    public ResponseEntity<Ship> createShip(@RequestBody Ship ship) {
+        shipRepository.save(ship);
+        return new ResponseEntity<>(ship, HttpStatus.CREATED);
     }
 }
